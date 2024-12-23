@@ -30,7 +30,7 @@ Personal portfolio website showcasing my skills, projects, and experience as a F
 ## 📝 Contact
 
 - LinkedIn: [Ashraf El Houfi](https://www.linkedin.com/in/achraf-el-houfi-136b4230b/)
-- Email: [your.email@example.com]
+- Email: [elhoufiashraf@gmail.com]
 
 ## 🚀 Performance Optimizations
 
