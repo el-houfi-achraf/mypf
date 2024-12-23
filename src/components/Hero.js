@@ -1,35 +1,9 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Float,
-  MeshDistortMaterial,
-  Sphere,
-  Stars,
-  Text,
-} from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import { OrbitControls, Stars } from "@react-three/drei";
+import { useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useTranslation } from "react-i18next";
-
-const FloatingText = () => {
-  return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-      <Text
-        fontSize={0.6}
-        position={[-2, 0, 0]}
-        color="#0070f3"
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/Inter-Bold.woff"
-        material-roughness={0}
-        material-metalness={1}
-      >
-        2025
-      </Text>
-    </Float>
-  );
-};
 
 const Hero = () => {
   const { t } = useTranslation();

@@ -10,7 +10,6 @@ import {
   SiMysql,
   SiJavascript,
   SiHtml5,
-  SiCss3,
   SiPhp,
   SiBootstrap,
 } from "react-icons/si";

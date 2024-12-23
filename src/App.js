@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollProgress from "./components/ScrollProgress";
 import Notification from "./components/Notification";
@@ -111,37 +111,12 @@ function App() {
     message: "",
     type: "success",
   });
-  const [darkMode, setDarkMode] = useState(true);
-  const [currentSection, setCurrentSection] = useState("hero");
+
   const [preferences, setPreferences] = usePreferences();
 
   useEffect(() => {
     // Simuler un chargement
     setTimeout(() => setIsLoading(false), 2000);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["hero", "about", "projects", "skills", "contact"];
-      const currentPos = window.pageYOffset + window.innerHeight / 2;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            currentPos >= offsetTop &&
-            currentPos < offsetTop + offsetHeight
-          ) {
-            setCurrentSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const showNotification = (message, type = "success") => {
@@ -151,9 +126,14 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {isLoading && <LoadingScreen />}
-      </AnimatePresence>
+      </motion.div>
 
       <ScrollProgress />
 

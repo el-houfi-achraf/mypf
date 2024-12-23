@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { FaTimes, FaChevronRight, FaLaptopCode } from "react-icons/fa";
-import { RiCodeBoxLine } from "react-icons/ri";
+import { FaTimes, FaChevronRight } from "react-icons/fa";
 import { SiCodersrank } from "react-icons/si";
 
 const NavItem = ({ href, label, isActive, index }) => (

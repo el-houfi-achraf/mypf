@@ -1,12 +1,6 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Float,
-  MeshDistortMaterial,
-  Sphere,
-  Stars,
-} from "@react-three/drei";
+import { Stars, OrbitControls } from "@react-three/drei";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
