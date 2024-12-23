@@ -4,6 +4,7 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useTranslation } from "react-i18next";
+import profileImage from "../assets/images/profile.png";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -189,7 +190,7 @@ const Hero = () => {
                 transition={{ duration: 4, repeat: Infinity }}
               >
                 <motion.img
-                  src="/images/profile.png"
+                  src={profileImage}
                   alt="Profile"
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.05 }}

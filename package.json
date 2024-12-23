@@ -1,6 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
+  "homepage": "https://el-houfi-achraf.github.io/mypf",
   "private": true,
   "dependencies": {
     "@react-three/drei": "^9.120.4",
@@ -11,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.20",
     "framer-motion": "^11.15.0",
+    "gh-pages": "^6.2.0",
     "gsap": "^3.12.5",
     "i18next": "^23.16.8",
     "i18next-browser-languagedetector": "^7.2.2",
@@ -26,11 +28,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "vercel --prod"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

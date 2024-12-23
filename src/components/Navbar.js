@@ -162,6 +162,18 @@ const Navbar = () => {
     { href: "#contact", label: "Contact" },
   ];
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      const offsetTop = element.offsetTop;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       <motion.nav
