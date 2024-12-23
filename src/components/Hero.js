@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 
 const Hero = () => {
   const { t } = useTranslation();
-  const containerRef = useRef(null);
 
   const scrollToProjects = (e) => {
     e.preventDefault();
