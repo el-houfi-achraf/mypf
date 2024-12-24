@@ -132,18 +132,6 @@ const About = () => {
         { name: "Java", icon: <FaJava className="text-[#007396]" /> },
       ],
     },
-    {
-      name: "DevOps & Tools",
-      level: "Intermediate",
-      icon: <FaTools className="text-2xl text-white" />,
-      gradient: "bg-gradient-to-r from-orange-500 to-pink-500",
-      items: [
-        { name: "Linux", icon: <SiLinux className="text-white" /> },
-        { name: "Git", icon: <SiGit className="text-[#F05032]" /> },
-        { name: "Docker", icon: <SiDocker className="text-[#2496ED]" /> },
-        { name: "C++", icon: <SiCplusplus className="text-[#00599C]" /> },
-      ],
-    },
   ];
 
   const containerVariants = {
@@ -258,6 +246,19 @@ const About = () => {
                 </div>
               </div>
 
+              <div className="mb-6">
+                <motion.a
+                  href="/path/to/your/cv.pdf"
+                  download="Ashraf_El_Houfi_CV.pdf"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaDownload className="text-lg" />
+                  Download CV
+                </motion.a>
+              </div>
+
               {/* Education Section */}
               <div className="mt-6">
                 <h3 className="text-lg font-semibold text-white mb-4">
@@ -268,82 +269,23 @@ const About = () => {
                     <h4 className="text-primary font-medium">
                       École Marocaine de Science et d'Ingénieur
                     </h4>
-                    <p className="text-gray-400 text-sm">
-                      Développement Informatique
-                    </p>
-                    <p className="text-gray-500 text-xs">Actuel</p>
+                    <p className="text-gray-500 text-xs">Current</p>
                   </div>
                   <div>
                     <h4 className="text-primary font-medium">
                       baccalauréat science expérimentale
                     </h4>
-                    <p className="text-gray-400 text-sm">Option physique</p>
                     <p className="text-gray-500 text-xs">2019-2020</p>
                   </div>
                   <div>
                     <h4 className="text-primary font-medium">
                       Brevet de Technicien Supérieur
                     </h4>
-                    <p className="text-gray-400 text-sm">
-                      Système électronique
-                    </p>
+
                     <p className="text-gray-500 text-xs">2020-2021</p>
                   </div>
                 </div>
               </div>
-
-              {/* Certifications Section */}
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold text-white mb-4">
-                  Certifications
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="text-primary font-medium">
-                      Java and Object-Oriented Programming
-                    </h4>
-                    <p className="text-gray-400 text-sm">
-                      University of Pennsylvania
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-primary font-medium">
-                      Web Design for Everybody Capstone
-                    </h4>
-                    <p className="text-gray-400 text-sm">
-                      University of Michigan
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-primary font-medium">
-                      The Arduino Platform and C Programming
-                    </h4>
-                    <p className="text-gray-400 text-sm">
-                      University of California, Irvine
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Download CV Button */}
-              <motion.div
-                variants={itemVariants}
-                className="flex justify-center sm:justify-start"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <motion.a
-                  href={cvFile}
-                  download="Ashraf_El_Houfi_CV.pdf"
-                  className="group relative inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-primary rounded-xl overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <FaDownload className="relative z-10 text-sm sm:text-base text-white" />
-                  <span className="relative z-10 text-sm sm:text-base font-medium text-white">
-                    Download CV
-                  </span>
-                </motion.a>
-              </motion.div>
             </motion.div>
 
             {/* Right Side - Skills */}

@@ -85,9 +85,8 @@ const Hero = () => {
                   <Typewriter
                     options={{
                       strings: [
-                        "Full Stack Developer",
+                        "StudentDeveloper",
                         "Software Engineer",
-                        "UI/UX Designer",
                         "Problem Solver",
                       ],
                       autoStart: true,
@@ -105,11 +104,11 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
               >
-                A passionate Full Stack Developer specializing in building
-                modern web applications with expertise in both frontend and
-                backend technologies. Currently pursuing Computer Development at
-                EMSI, I combine technical skills with creative problem-solving
-                to deliver innovative solutions.
+                A passionate Student Developer specializing in building modern
+                web applications with expertise in both frontend and backend
+                technologies. Currently pursuing Computer Development at EMSI, I
+                combine technical skills with creative problem-solving to
+                deliver innovative solutions.
               </motion.p>
             </div>
 
