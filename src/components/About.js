@@ -21,7 +21,6 @@ import {
   SiTailwindcss,
 } from "react-icons/si";
 import PageTransition from "./PageTransition";
-import cvFile from "../assets/documents/cv.pdf";
 import AnimatedBackground from "./AnimatedBackground";
 
 const SkillCard = ({ skill, index }) => (
@@ -226,7 +225,7 @@ const About = () => {
 
               <div className="mb-6">
                 <motion.a
-                  href="../assets/documents/cv.pdf"
+                  href={`${process.env.PUBLIC_URL}/cv.pdf`}
                   download="Ashraf_El_Houfi_CV.pdf"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors"
                   whileHover={{ scale: 1.05 }}
