@@ -18,9 +18,11 @@ import {
   SiGit,
   SiDocker,
   SiCplusplus,
+  SiTailwindcss,
 } from "react-icons/si";
 import PageTransition from "./PageTransition";
 import cvFile from "../assets/documents/cv.pdf";
+import AnimatedBackground from "./AnimatedBackground";
 
 const SkillCard = ({ skill, index }) => (
   <motion.div
@@ -90,13 +92,13 @@ const About = () => {
     offset: ["start end", "end start"],
   });
 
-  const scale = useSpring(useTransform(scrollYProgress, [0, 0.5], [0.95, 1]), {
-    stiffness: 100,
-    damping: 30,
-    mass: 0.2,
+  const scale = useSpring(useTransform(scrollYProgress, [0, 0.5], [0.98, 1]), {
+    stiffness: 50,
+    damping: 15,
+    mass: 0.1,
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const y = useTransform(scrollYProgress, [0, 1], [25, -25]);
 
   const skills = [
     {
@@ -114,8 +116,8 @@ const About = () => {
         { name: "React", icon: <SiReact className="text-[#61DAFB]" /> },
         { name: "WordPress", icon: <SiWordpress className="text-[#21759B]" /> },
         {
-          name: "TypeScript",
-          icon: <SiTypescript className="text-[#3178C6]" />,
+          name: "Tailwind",
+          icon: <SiTailwindcss className="text-[#06B6D4]" />,
         },
       ],
     },
@@ -139,22 +141,19 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
+        staggerChildren: 0.1,
         duration: 0.3,
-        ease: "easeOut",
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut",
+        duration: 0.3,
       },
     },
   };
@@ -167,28 +166,7 @@ const About = () => {
         className="relative min-h-screen py-12 sm:py-20 bg-black overflow-hidden will-change-transform"
         aria-label="About Section"
       >
-        {/* Background Animation */}
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 1] }}>
-            <ambientLight intensity={0.5} />
-            <Stars
-              radius={100}
-              depth={50}
-              count={5000}
-              factor={4}
-              saturation={0}
-              fade
-              speed={1}
-            />
-            <OrbitControls
-              enableZoom={false}
-              enablePan={false}
-              enableRotate={false}
-              autoRotate
-              autoRotateSpeed={0.5}
-            />
-          </Canvas>
-        </div>
+        <AnimatedBackground />
 
         <motion.div
           style={{ scale, y }}
@@ -248,7 +226,7 @@ const About = () => {
 
               <div className="mb-6">
                 <motion.a
-                  href="/path/to/your/cv.pdf"
+                  href="../assets/documents/cv.pdf"
                   download="Ashraf_El_Houfi_CV.pdf"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg transition-colors"
                   whileHover={{ scale: 1.05 }}

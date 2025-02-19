@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Stars, OrbitControls } from "@react-three/drei";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import AnimatedBackground from "./AnimatedBackground";
 
 const SkillCard = ({ skill, index }) => {
   const cardRef = useRef(null);
@@ -11,7 +12,7 @@ const SkillCard = ({ skill, index }) => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   return (
@@ -19,9 +20,16 @@ const SkillCard = ({ skill, index }) => {
       ref={cardRef}
       style={{ y, opacity }}
       className="relative group"
-      initial={{ opacity: 0, x: -50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.2,
+        delay: index * 0.05, // Délai plus court
+      }}
+      viewport={{
+        once: true,
+        margin: "-10%", // Réduire la marge de déclenchement
+      }}
     >
       <div
         className={`absolute -inset-1 bg-gradient-to-r ${skill.color} rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200`}
@@ -119,27 +127,7 @@ const Skills = () => {
       className="relative min-h-screen py-20 overflow-hidden bg-black"
     >
       {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <ambientLight intensity={0.5} />
-          <Stars
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={1}
-          />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </div>
+      <AnimatedBackground />
 
       {/* Contenu principal */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

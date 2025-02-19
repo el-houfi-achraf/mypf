@@ -48,3 +48,41 @@ code {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Optimisations CSS */
+* {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: flat;
+  will-change: auto;
+}
+
+.motion-reduce {
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Optimiser le rendu des animations */
+.animate-on-scroll {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  contain: paint layout;
+}
+
+/* Désactiver les animations pour les utilisateurs qui préfèrent les réduire */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimiser le rendu des gradients */
+.gradient-bg {
+  background-image: none !important;
+  background-color: rgba(var(--primary-rgb), 0.1);
+}

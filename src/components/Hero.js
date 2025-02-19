@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useTranslation } from "react-i18next";
 import profileImage from "../assets/images/profile.png";
+import AnimatedBackground from "./AnimatedBackground";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -22,28 +23,8 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen pt-8 flex items-center bg-black overflow-hidden">
-      {/* Animated Background - Same as Skills */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <ambientLight intensity={0.5} />
-          <Stars
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={1}
-          />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </div>
+      {/* Replace the existing Canvas background with AnimatedBackground */}
+      <AnimatedBackground />
 
       {/* Main Content */}
       <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 h-screen flex flex-col justify-center">
@@ -85,8 +66,8 @@ const Hero = () => {
                   <Typewriter
                     options={{
                       strings: [
-                        "StudentDeveloper",
-                        "Software Engineer",
+                        "Student Developer",
+                        "AI Enthusiast",
                         "Problem Solver",
                       ],
                       autoStart: true,

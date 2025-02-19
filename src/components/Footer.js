@@ -8,6 +8,7 @@ import {
   FaHeart,
   FaArrowUp,
 } from "react-icons/fa";
+import AnimatedBackground from "./AnimatedBackground";
 
 const SocialLink = ({ href, icon: Icon, label }) => (
   <motion.a
@@ -33,27 +34,7 @@ const Footer = () => {
   return (
     <footer className="relative bg-black overflow-hidden">
       {/* Background Animation */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <ambientLight intensity={0.5} />
-          <Stars
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={1}
-          />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </div>
+      <AnimatedBackground />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8 items-center">

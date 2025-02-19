@@ -13,12 +13,14 @@ import {
   SiPhp,
   SiBootstrap,
 } from "react-icons/si";
+import AnimatedBackground from "./AnimatedBackground";
 
 const ProjectCard = ({ project, index }) => (
   <motion.div
-    initial={{ opacity: 0, y: 50 }}
+    initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.2 }}
+    transition={{ duration: 0.3, delay: index * 0.1 }}
+    viewport={{ once: true }}
     className="relative group"
   >
     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-violet-500 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300" />
@@ -183,34 +185,15 @@ const Projects = () => {
       className="relative min-h-screen py-20 bg-black overflow-hidden"
     >
       {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <ambientLight intensity={0.5} />
-          <Stars
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={1}
-          />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </div>
+      <AnimatedBackground />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
+          viewport={{ once: true }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-purple-500">
@@ -230,19 +213,19 @@ const Projects = () => {
         >
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <div className="p-6 bg-black/50 backdrop-blur-sm rounded-xl border border-white/10">
-              <h4 className="text-2xl font-bold text-primary mb-2">20+</h4>
+              <h4 className="text-2xl font-bold text-primary mb-2">10+</h4>
               <p className="text-gray-400">Projects Completed</p>
             </div>
             <div className="p-6 bg-black/50 backdrop-blur-sm rounded-xl border border-white/10">
-              <h4 className="text-2xl font-bold text-primary mb-2">500+</h4>
+              <h4 className="text-2xl font-bold text-primary mb-2">50+</h4>
               <p className="text-gray-400">Commits</p>
             </div>
             <div className="p-6 bg-black/50 backdrop-blur-sm rounded-xl border border-white/10">
-              <h4 className="text-2xl font-bold text-primary mb-2">10+</h4>
+              <h4 className="text-2xl font-bold text-primary mb-2">8+</h4>
               <p className="text-gray-400">Technologies</p>
             </div>
             <div className="p-6 bg-black/50 backdrop-blur-sm rounded-xl border border-white/10">
-              <h4 className="text-2xl font-bold text-primary mb-2">3+</h4>
+              <h4 className="text-2xl font-bold text-primary mb-2">2+</h4>
               <p className="text-gray-400">Years Coding</p>
             </div>
           </div>
