@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 
 const AnimatedBackground = () => {
-  // Réduire encore plus le nombre d'étoiles
-  const stars = Array.from({ length: 30 }, (_, i) => ({
-    // Réduit à 30 étoiles
+  // Réduire le nombre d'étoiles à 15 maximum pour optimiser les performances
+  const stars = Array.from({ length: 15 }, (_, i) => ({
+    // Réduit à 15 étoiles
     id: i,
     size: Math.random() * 1.5 + 0.5, // Étoiles plus petites
     x: Math.random() * 100,

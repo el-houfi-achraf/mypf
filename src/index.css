@@ -2,6 +2,211 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optimisations globales pour les performances */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Cache le curseur par défaut pour utiliser le curseur personnalisé */
+body * {
+  cursor: none !important;
+}
+
+/* Sauf pour les éléments de formulaire et de saisie */
+input,
+textarea,
+select,
+button[type="submit"] {
+  cursor: auto !important;
+}
+
+/* Optimisations will-change pour les animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+/* GPU acceleration pour les animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimisations pour les images */
+.optimized-image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  contain: layout style paint;
+}
+
+/* Optimisations pour les animations complexes */
+.complex-animation {
+  contain: layout style paint;
+  will-change: transform, opacity;
+}
+
+/* Optimisations pour les conteneurs de scroll */
+.scroll-container {
+  contain: layout style paint;
+  overflow-anchor: none;
+}
+
+/* Effet glass morphism */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Classes utilitaires pour le mode sombre */
+.dark .glass-morphism {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animation de fondu pour les transitions de thème */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Optimisation pour les éléments qui changent fréquemment */
+.dynamic-element {
+  contain: layout style;
+}
+
+/* Limitation de la portée des reflows */
+.layout-boundary {
+  contain: layout;
+}
+
+/* Classes pour les effets 3D */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Utilitaires pour les animations fluides */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Classe pour limiter les lignes de texte */
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Classe pour le texte dégradé */
+.gradient-text {
+  background: linear-gradient(135deg, #7c3aed, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animations pour le loader */
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.8);
+  }
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* Mode sombre pour la scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+
+/* Sélection de texte personnalisée */
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: white;
+}
+
+/* Focus visible pour l'accessibilité */
+.focus-visible:focus {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+/* Classes pour les micro-interactions */
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
 @layer base {
   body {
     @apply font-poppins;

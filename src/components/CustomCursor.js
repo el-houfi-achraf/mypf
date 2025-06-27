@@ -1,10 +1,19 @@
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useSpring } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "../hooks/usePerformance";
 
 const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
+  const [cursorType, setCursorType] = useState("default");
+  const [trail, setTrail] = useState([]);
+  const isMobile = useIsMobile();
+  const trailLength = 8;
+
+  // Utilisation de springs pour des animations plus fluides
+  const cursorX = useSpring(mousePosition.x, { stiffness: 500, damping: 28 });
+  const cursorY = useSpring(mousePosition.y, { stiffness: 500, damping: 28 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {

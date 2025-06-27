@@ -49,23 +49,7 @@ const Footer = () => {
           </div>
 
           {/* Social Links */}
-          <div className="flex justify-center gap-4">
-            <SocialLink
-              href="https://github.com/el-houfi-achraf"
-              icon={FaGithub}
-              label="GitHub"
-            />
-            <SocialLink
-              href="https://www.linkedin.com/in/achraf-el-houfi-136b4230b/"
-              icon={FaLinkedin}
-              label="LinkedIn"
-            />
-            <SocialLink
-              href="https://www.instagram.com/ashraf_elhoufi/"
-              icon={FaInstagram}
-              label="Instagram"
-            />
-          </div>
+          <div className="flex justify-center gap-4"></div>
 
           {/* Copyright */}
           <div className="text-center md:text-right">
