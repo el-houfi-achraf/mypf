@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import ASHRAF from "../assets/images/cle.png";
+import ASHRAF from "../assets/images/r.jpg";
 import CV from "../assets/documents/CV_El_Houfi_Achraf.pdf";
 import {
   FaCode,
