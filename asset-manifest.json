@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/mypf/static/css/main.c7a170aa.css",
-    "main.js": "/mypf/static/js/main.8858f769.js",
+    "main.js": "/mypf/static/js/main.e2ca32b0.js",
     "static/js/453.1407b060.chunk.js": "/mypf/static/js/453.1407b060.chunk.js",
+    "static/media/ez.png": "/mypf/static/media/ez.0bc3a0b063b1eb0ecea0.png",
     "static/media/facesmart.png": "/mypf/static/media/facesmart.140d65d930113710e93b.png",
     "static/media/mb.png": "/mypf/static/media/mb.409c3f0719cc4d18ace2.png",
     "static/media/CV_El_Houfi_Achraf.pdf": "/mypf/static/media/CV_El_Houfi_Achraf.ab99cdcac821f8d9573c.pdf",
-    "static/media/r.jpg": "/mypf/static/media/r.4957a1a072cf85fcf47e.jpg",
     "static/media/se7ati.png": "/mypf/static/media/se7ati.a5511e7e6667ef8a88a8.png",
     "index.html": "/mypf/index.html",
     "main.c7a170aa.css.map": "/mypf/static/css/main.c7a170aa.css.map",
-    "main.8858f769.js.map": "/mypf/static/js/main.8858f769.js.map",
+    "main.e2ca32b0.js.map": "/mypf/static/js/main.e2ca32b0.js.map",
     "453.1407b060.chunk.js.map": "/mypf/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c7a170aa.css",
-    "static/js/main.8858f769.js"
+    "static/js/main.e2ca32b0.js"
   ]
 }
