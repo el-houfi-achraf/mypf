@@ -11,7 +11,8 @@ import Projects3D from "./components/Projects3D";
 import InteractiveSkillsTimeline from "./components/InteractiveSkillsTimeline";
 import AnimatedContact from "./components/AnimatedContact";
 import Footer from "./components/Footer";
-import EnhancedCursor from "./components/EnhancedCursor";
+// import EnhancedCursor from "./components/EnhancedCursor";
+import CustomCursor from "./components/CustomCursor";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -57,7 +58,7 @@ function App() {
         {!isLoading && (
           <div className="bg-black text-white transition-colors duration-300">
             <EnhancedNavbar />
-            <EnhancedCursor />
+            <CustomCursor />
 
             <main>
               <ParallaxHero />

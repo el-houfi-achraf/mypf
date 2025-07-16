@@ -7,6 +7,10 @@ import { useTranslation } from "../hooks/useTranslation";
 import facesmartImage from "../assets/images/facesmart.png";
 import se7atiImage from "../assets/images/se7ati.png";
 import mbImage from "../assets/images/mb.png";
+import ezImage from "../assets/images/ez.png";
+import UMLImage from "../assets/images/uml.png";
+import vgImage from "../assets/images/VG.png";
+import toneImage from "../assets/images/Tone.png";
 
 const ProjectCard3D = ({ project, index }) => {
   const cardRef = useRef();
@@ -47,7 +51,7 @@ const ProjectCard3D = ({ project, index }) => {
   return (
     <motion.div
       ref={cardRef}
-      className="relative group perspective-1000"
+      className="relative group perspective-1000 project-card"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -227,7 +231,7 @@ const Projects3D = () => {
     },
     {
       id: 2,
-      title: "SE7ATI",
+      title: "STEVIA",
       description: t("projects.projectDescriptions.stevia"),
       image: se7atiImage,
       technologies: ["Django", "Jitsi Api ", "Tailwind Css", "Mysql"],
@@ -251,6 +255,48 @@ const Projects3D = () => {
       category: "mobile",
       views: 2103,
       linesOfCode: "12.4k",
+      completion: 100,
+    },
+    {
+      id: 4,
+      title: "UMLForge",
+      description: t("projects.projectDescriptions.umlforge"),
+      image: UMLImage,
+      technologies: ["Java", "JavaFX", "UML", "XML"],
+      github: "https://github.com/example/umlforge",
+      demo: "https://demo-umlforge.com",
+      status: "completed",
+      category: "fullstack",
+      views: 892,
+      linesOfCode: "18.5k",
+      completion: 100,
+    },
+    {
+      id: 5,
+      title: "ToneFixer",
+      description: t("projects.projectDescriptions.tonefixer"),
+      image: toneImage,
+      technologies: ["Python", "PyQt5", "Audio Processing", "FFmpeg"],
+      github: "https://github.com/example/tonefixer",
+      demo: "https://demo-tonefixer.com",
+      status: "completed",
+      category: "fullstack",
+      views: 654,
+      linesOfCode: "7.8k",
+      completion: 100,
+    },
+    {
+      id: 6,
+      title: "VG_IT IAM",
+      description: t("projects.projectDescriptions.vgitiam"),
+      image: vgImage,
+      technologies: ["Spring Boot", "Angular", "Keycloak", "PostgreSQL"],
+      github: "https://github.com/example/vgit-iam",
+      demo: "https://demo-vgit-iam.com",
+      status: "completed",
+      category: "fullstack",
+      views: 1456,
+      linesOfCode: "25.3k",
       completion: 100,
     },
   ]);

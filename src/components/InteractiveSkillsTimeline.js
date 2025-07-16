@@ -2,18 +2,18 @@ import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   FaReact,
-  FaNodeJs,
   FaJs,
   FaPython,
   FaGitAlt,
   FaDocker,
   FaAngular,
-  FaMobile,
   FaJava,
   FaSchool,
-  FaCalendarPlus,
-  FaSadCry,
   FaUniversity,
+  FaDatabase,
+  FaCloud,
+  FaCode,
+  FaChartBar,
 } from "react-icons/fa";
 import {
   SiTypescript,
@@ -29,16 +29,69 @@ import {
   SiApachespark,
   SiTensorflow,
   SiQt,
+  SiSpring,
 } from "react-icons/si";
-import { FaDatabase, FaCloud, FaCode } from "react-icons/fa";
 import { useTranslation } from "../hooks/useTranslation";
+import "./SkillsProgress.css";
+
+// Composant pour l'animation des pourcentages
+const AnimatedPercentage = ({ value, duration = 2000, delay = 0 }) => {
+  const [count, setCount] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  const ref = useRef();
+  const isInView = useInView(ref, { once: true });
+
+  React.useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        setIsActive(true);
+      }, delay);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay]);
+
+  React.useEffect(() => {
+    if (!isActive) return;
+
+    const increment = value / (duration / 16);
+    const timer = setInterval(() => {
+      setCount((prevCount) => {
+        const newCount = prevCount + increment;
+        if (newCount >= value) {
+          clearInterval(timer);
+          return value;
+        }
+        return newCount;
+      });
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [isActive, value, duration]);
+
+  return (
+    <span ref={ref} className="percentage-display">
+      {Math.floor(count)}%
+    </span>
+  );
+};
 
 const SkillIcon = ({ icon: Icon, name, level, delay }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef();
+  const isInView = useInView(ref, { once: true });
+
+  React.useEffect(() => {
+    if (isInView) {
+      setIsVisible(true);
+    }
+  }, [isInView]);
 
   return (
     <motion.div
-      className="relative group"
+      ref={ref}
+      className="relative group skill-item"
       initial={{ opacity: 0, scale: 0 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay }}
@@ -47,59 +100,119 @@ const SkillIcon = ({ icon: Icon, name, level, delay }) => {
       onHoverEnd={() => setIsHovered(false)}
     >
       <motion.div
-        className="relative p-4 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl cursor-pointer overflow-hidden"
-        whileHover={{ scale: 1.05, rotateY: 10 }}
+        className="skill-card relative p-6 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl cursor-pointer h-36 flex flex-col justify-between smooth-transition"
+        whileHover={{ scale: 1.05, y: -5 }}
         whileTap={{ scale: 0.95 }}
       >
-        {/* Icône */}
-        <div className="flex items-center justify-center mb-3">
-          <Icon className="text-3xl text-primary group-hover:text-white transition-colors duration-300" />
+        {/* Badge de niveau */}
+        <div className="level-badge">
+          {level >= 90 ? "★" : level >= 80 ? "◆" : level >= 70 ? "●" : "○"}
         </div>
 
-        {/* Nom de la compétence */}
-        <p className="text-sm font-medium text-center text-gray-300 group-hover:text-white transition-colors">
-          {name}
-        </p>
+        {/* Tooltip */}
+        <div className="skill-tooltip">
+          Niveau: {level}% •{" "}
+          {level >= 90
+            ? "Expert"
+            : level >= 80
+            ? "Avancé"
+            : level >= 70
+            ? "Intermédiaire"
+            : "Débutant"}
+        </div>
 
-        {/* Barre de progression circulaire */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 32 32">
-            <circle
-              cx="16"
-              cy="16"
-              r="14"
-              className="stroke-gray-700"
-              strokeWidth="2"
-              fill="none"
-            />
-            <motion.circle
-              cx="16"
-              cy="16"
-              r="14"
-              className="stroke-primary"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: isHovered ? level / 100 : 0 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              style={{
-                strokeDasharray: "88",
-                strokeDashoffset: "88",
+        {/* Icône et nom */}
+        <div className="flex flex-col items-center mb-3">
+          <motion.div
+            className="skill-icon mb-2"
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Icon className="text-4xl text-primary group-hover:text-white transition-colors duration-300" />
+          </motion.div>
+          <h3 className="text-sm font-semibold text-center text-gray-300 group-hover:text-white transition-colors">
+            {name}
+          </h3>
+        </div>
+
+        {/* Barre de progression avec pourcentage */}
+        <div className="w-full">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs text-gray-400 font-medium">Maîtrise</span>
+            <AnimatedPercentage value={level} delay={delay + 500} />
+          </div>
+          <div className="skill-progress-bar w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+            <motion.div
+              className="skill-progress-fill h-full rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: isVisible ? `${level}%` : 0 }}
+              transition={{
+                duration: 1.5,
+                ease: "easeOut",
+                delay: delay + 0.3,
               }}
             />
-          </svg>
-          <span className="absolute text-xs font-bold text-white">
-            {level}%
-          </span>
+          </div>
+          {/* Indicateur de niveau textuel */}
+          <div className="text-center mt-2">
+            <span className="text-xs text-gray-500">
+              {level >= 90
+                ? "Expert"
+                : level >= 80
+                ? "Avancé"
+                : level >= 70
+                ? "Intermédiaire"
+                : "Débutant"}
+            </span>
+          </div>
         </div>
 
-        {/* Effet de brillance */}
+        {/* Overlay de hover avec progression circulaire */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
-          animate={{ x: isHovered ? ["-100%", "100%"] : "-100%" }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-        />
+          className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center rounded-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="circular-progress relative">
+            <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="#374151"
+                strokeWidth="2"
+              />
+              <motion.path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="url(#gradient)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: isHovered ? level / 100 : 0 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                style={{
+                  strokeDasharray: "100, 100",
+                }}
+              />
+              <defs>
+                <linearGradient
+                  id="gradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#8b5cf6" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="circular-progress-text">
+              <span className="text-lg font-bold">{level}%</span>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
@@ -202,6 +315,7 @@ const InteractiveSkillsTimeline = () => {
     // Backend & Languages
     { icon: FaPython, name: "Python", level: 85, category: "backend" },
     { icon: SiDjango, name: "Django", level: 80, category: "backend" },
+    { icon: SiSpring, name: "Spring Boot", level: 82, category: "backend" },
     { icon: SiCplusplus, name: "C++", level: 75, category: "backend" },
     { icon: SiC, name: "C", level: 70, category: "backend" },
     { icon: FaJava, name: "Java", level: 80, category: "backend" },
@@ -223,6 +337,7 @@ const InteractiveSkillsTimeline = () => {
     // Data & AI
     { icon: SiApachespark, name: "Apache Spark", level: 70, category: "data" },
     { icon: SiTensorflow, name: "TensorFlow", level: 75, category: "data" },
+    { icon: FaChartBar, name: "Power BI", level: 78, category: "data" },
 
     // Desktop Development
     { icon: SiQt, name: "PyQt", level: 70, category: "desktop" },
@@ -330,9 +445,9 @@ const InteractiveSkillsTimeline = () => {
               <motion.button
                 key={category.key}
                 onClick={() => setSelectedCategory(category.key)}
-                className={`px-6 py-2 rounded-full border transition-all duration-300 ${
+                className={`category-filter px-6 py-3 rounded-full border-2 font-medium transition-all duration-300 ${
                   selectedCategory === category.key
-                    ? "bg-primary border-primary text-white"
+                    ? "active"
                     : "border-white/20 text-gray-300 hover:border-primary hover:text-primary"
                 }`}
                 whileHover={{ scale: 1.05 }}
@@ -345,17 +460,45 @@ const InteractiveSkillsTimeline = () => {
 
           {/* Grille de compétences */}
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 max-w-7xl mx-auto"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
             layout
           >
             {filteredSkills.map((skill, index) => (
-              <SkillIcon
+              <motion.div
                 key={skill.name}
-                icon={skill.icon}
-                name={skill.name}
-                level={skill.level}
-                delay={index * 0.1}
-              />
+                variants={{
+                  hidden: { opacity: 0, y: 50, scale: 0.8 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      duration: 0.5,
+                      ease: "easeOut",
+                    },
+                  },
+                }}
+                layout
+              >
+                <SkillIcon
+                  icon={skill.icon}
+                  name={skill.name}
+                  level={skill.level}
+                  delay={index * 0.1}
+                />
+              </motion.div>
             ))}
           </motion.div>
         </div>

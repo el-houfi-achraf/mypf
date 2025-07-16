@@ -23,30 +23,39 @@ const LoaderIcon = ({ icon: Icon, delay }) => (
   </motion.div>
 );
 
-const TypewriterText = ({ text, speed = 100 }) => {
-  const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+// Composant pour animer le compteur de pourcentage
+const AnimatedCounter = ({ value, duration = 800 }) => {
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, speed);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, speed]);
+    const startTime = Date.now();
+    const startValue = count;
+    const change = value - startValue;
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Fonction d'easing pour une animation plus fluide
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = startValue + change * easeOutQuart;
+
+      setCount(Math.floor(currentValue));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(value);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [value, duration, count]);
 
   return (
-    <span className="font-mono">
-      {displayText}
-      <motion.span
-        animate={{ opacity: [0, 1, 0] }}
-        transition={{ duration: 0.8, repeat: Infinity }}
-        className="text-primary"
-      >
-        |
-      </motion.span>
+    <span className="tabular-nums">
+      {count.toFixed(0)}
+      <span className="text-primary">%</span>
     </span>
   );
 };
@@ -56,28 +65,29 @@ const CircularProgress = ({ progress }) => {
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="relative w-32 h-32">
-      <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+    <div className="relative w-40 h-40">
+      {/* Cercle de fond avec effet glow */}
+      <svg className="w-40 h-40 transform -rotate-90" viewBox="0 0 100 100">
         {/* Cercle de fond */}
         <circle
           cx="50"
           cy="50"
           r="40"
           stroke="currentColor"
-          strokeWidth="4"
+          strokeWidth="3"
           fill="none"
-          className="text-gray-800"
+          className="text-gray-800/50"
         />
-        {/* Cercle de progression */}
+        {/* Cercle de progression avec gradient */}
         <motion.circle
           cx="50"
           cy="50"
           r="40"
-          stroke="currentColor"
-          strokeWidth="4"
+          stroke="url(#progressGradient)"
+          strokeWidth="3"
           fill="none"
           strokeLinecap="round"
-          className="text-primary"
+          className="drop-shadow-lg"
           style={{
             strokeDasharray: circumference,
             strokeDashoffset: strokeDashoffset,
@@ -86,19 +96,65 @@ const CircularProgress = ({ progress }) => {
           animate={{ strokeDashoffset: strokeDashoffset }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
+
+        {/* Définition du gradient */}
+        <defs>
+          <linearGradient
+            id="progressGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop
+              offset="0%"
+              style={{ stopColor: "#3b82f6", stopOpacity: 1 }}
+            />
+            <stop
+              offset="50%"
+              style={{ stopColor: "#8b5cf6", stopOpacity: 1 }}
+            />
+            <stop
+              offset="100%"
+              style={{ stopColor: "#f59e0b", stopOpacity: 1 }}
+            />
+          </linearGradient>
+        </defs>
       </svg>
 
-      {/* Pourcentage au centre */}
+      {/* Pourcentage au centre avec effet de compteur animé */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <motion.span
-          key={progress}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-2xl font-bold text-white"
-        >
-          {progress}%
-        </motion.span>
+        <div className="text-center">
+          <motion.div
+            key={progress}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="text-3xl font-bold text-white mb-1"
+          >
+            <AnimatedCounter value={progress} />
+          </motion.div>
+          <motion.div
+            className="text-xs text-gray-400 font-medium tracking-wider"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            LOADING
+          </motion.div>
+        </div>
       </div>
+
+      {/* Effet de glow rotatif */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: `conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.3), transparent)`,
+          filter: "blur(2px)",
+        }}
+      />
     </div>
   );
 };
@@ -129,13 +185,25 @@ const EnhancedLoadingScreen = () => {
           return 100;
         }
 
-        const newProgress = prev + Math.random() * 15 + 5;
+        // Progression plus fluide avec des paliers
+        let increment;
+        if (prev < 20) {
+          increment = Math.random() * 8 + 2; // Démarrage rapide
+        } else if (prev < 60) {
+          increment = Math.random() * 6 + 1; // Vitesse moyenne
+        } else if (prev < 90) {
+          increment = Math.random() * 4 + 0.5; // Ralentissement
+        } else {
+          increment = Math.random() * 2 + 0.2; // Très lent vers la fin
+        }
+
+        const newProgress = prev + increment;
         const stepIndex = Math.floor((newProgress / 100) * loadingSteps.length);
         setCurrentStep(Math.min(stepIndex, loadingSteps.length - 1));
 
         return Math.min(newProgress, 100);
       });
-    }, 300);
+    }, 200); // Interval plus fréquent pour plus de fluidité
 
     return () => clearInterval(interval);
   }, [loadingSteps.length]);
@@ -247,37 +315,76 @@ const EnhancedLoadingScreen = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.5 }}
-              className="flex justify-center space-x-6 mb-6"
+              className="flex justify-center space-x-6 mb-8"
             >
               {icons.map((Icon, index) => (
                 <LoaderIcon key={index} icon={Icon} delay={index * 0.2} />
               ))}
             </motion.div>
 
-            {/* Texte de statut avec effet typewriter */}
+            {/* Barre de progression modernisée */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "400px" }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              className="mx-auto h-2 bg-gray-800/50 rounded-full overflow-hidden backdrop-blur-sm border border-gray-700/50"
+            >
+              <motion.div
+                className="h-full bg-gradient-to-r from-primary via-violet-500 to-amber-500 relative"
+                style={{ width: `${progress}%` }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                {/* Effet de brillance qui se déplace */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear",
+                    repeatDelay: 0.5,
+                  }}
+                />
+
+                {/* Particules flottantes dans la barre */}
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-white rounded-full"
+                    style={{
+                      left: `${20 + i * 30}%`,
+                      top: "25%",
+                    }}
+                    animate={{
+                      y: [0, -4, 0],
+                      opacity: [0.5, 1, 0.5],
+                      scale: [1, 1.5, 1],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: i * 0.2,
+                      ease: "easeInOut",
+                    }}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Indicateur de progression détaillé */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.5 }}
-              className="text-gray-300 text-lg h-8"
+              transition={{ delay: 2 }}
+              className="text-center mt-4"
             >
-              {currentStep < loadingSteps.length && (
-                <TypewriterText text={loadingSteps[currentStep]} speed={50} />
-              )}
-            </motion.div>
-
-            {/* Barre de progression secondaire */}
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: "300px" }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-              className="mx-auto h-1 bg-gray-800 rounded-full overflow-hidden"
-            >
-              <motion.div
-                className="h-full bg-gradient-to-r from-primary to-violet-500"
-                style={{ width: `${progress}%` }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              />
+              <div className="text-sm text-gray-400 font-mono">
+                {progress < 100
+                  ? `${progress.toFixed(1)}% • ${
+                      loadingSteps[currentStep] || "Initialisation..."
+                    }`
+                  : "100% • Prêt !"}
+              </div>
             </motion.div>
 
             {/* Message de bienvenue */}

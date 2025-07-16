@@ -291,3 +291,45 @@ code {
   background-image: none !important;
   background-color: rgba(var(--primary-rgb), 0.1);
 }
+
+/* Classes pour le curseur personnalisé */
+.project-card {
+  cursor: none !important;
+  position: relative;
+}
+
+.skill-item {
+  cursor: none !important;
+  position: relative;
+}
+
+.tech-item {
+  cursor: none !important;
+}
+
+.card {
+  cursor: none !important;
+}
+
+.btn-primary {
+  cursor: none !important;
+}
+
+/* Optimisations pour le curseur personnalisé */
+.cursor-main {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cursor-trail {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.cursor-particle {
+  will-change: transform, opacity, scale;
+  backface-visibility: hidden;
+}

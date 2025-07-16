@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import ASHRAF from "../assets/images/ez.png";
 import CV from "../assets/documents/CV_El_Houfi_Achraf.pdf";
@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import LazyImage from "./LazyImage";
 import { useTranslation } from "../hooks/useTranslation";
+import "./CircularProgress.css";
 
 const ProgressiveReveal = ({ children, delay = 0 }) => {
   const ref = useRef();
@@ -53,63 +54,267 @@ const CircularProgress = ({
   const circumference = 2 * Math.PI * 45;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
+  const getColorClass = (color) => {
+    switch (color) {
+      case "primary":
+        return "text-blue-500";
+      case "success":
+        return "text-green-500";
+      case "warning":
+        return "text-yellow-500";
+      case "error":
+        return "text-red-500";
+      default:
+        return "text-blue-500";
+    }
+  };
+
+  const getGradientId = (color) => {
+    switch (color) {
+      case "primary":
+        return "blue-gradient";
+      case "success":
+        return "green-gradient";
+      case "warning":
+        return "yellow-gradient";
+      case "error":
+        return "red-gradient";
+      default:
+        return "blue-gradient";
+    }
+  };
+
   return (
     <motion.div
       ref={ref}
       className="flex flex-col items-center group"
-      whileHover={{ scale: 1.05 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      whileHover={{ scale: 1.05, y: -5 }}
     >
-      <div className="relative w-24 h-24 mb-4">
-        <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
-          {/* Cercle de fond */}
+      <div className="relative w-32 h-32 mb-6">
+        {/* Effet de lueur de fond */}
+        <motion.div
+          className={`absolute inset-0 rounded-full ${getColorClass(
+            color
+          ).replace("text-", "bg-")}/20 blur-xl pulse-glow`}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        <svg
+          className="w-32 h-32 transform -rotate-90 progress-circle"
+          viewBox="0 0 100 100"
+        >
+          {/* Définition des gradients */}
+          <defs>
+            <linearGradient
+              id="blue-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#1d4ed8" />
+            </linearGradient>
+            <linearGradient
+              id="green-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#10b981" />
+              <stop offset="100%" stopColor="#047857" />
+            </linearGradient>
+            <linearGradient
+              id="yellow-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="100%" stopColor="#d97706" />
+            </linearGradient>
+            <linearGradient
+              id="red-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#ef4444" />
+              <stop offset="100%" stopColor="#dc2626" />
+            </linearGradient>
+            <linearGradient
+              id="gray-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#374151" />
+              <stop offset="100%" stopColor="#1f2937" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Cercle de fond avec effet de brillance */}
           <circle
             cx="50"
             cy="50"
             r="45"
-            stroke="currentColor"
-            strokeWidth="6"
+            stroke="url(#gray-gradient)"
+            strokeWidth="3"
             fill="none"
-            className="text-gray-700"
+            opacity="0.3"
           />
-          {/* Cercle de progression */}
+
+          {/* Cercle de progression principal */}
           <motion.circle
             cx="50"
             cy="50"
             r="45"
-            stroke="currentColor"
-            strokeWidth="6"
+            stroke={`url(#${getGradientId(color)})`}
+            strokeWidth="4"
             fill="none"
             strokeLinecap="round"
-            className={`text-${color}`}
+            filter="url(#glow)"
             style={{
               strokeDasharray: circumference,
               strokeDashoffset: isVisible ? strokeDashoffset : circumference,
             }}
-            transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+            initial={{ strokeDashoffset: circumference }}
+            animate={{
+              strokeDashoffset: isVisible ? strokeDashoffset : circumference,
+            }}
+            transition={{
+              duration: 2.5,
+              ease: "easeInOut",
+              delay: 0.3,
+            }}
+          />
+
+          {/* Cercle de progression secondaire pour effet de profondeur */}
+          <motion.circle
+            cx="50"
+            cy="50"
+            r="42"
+            stroke={`url(#${getGradientId(color)})`}
+            strokeWidth="1"
+            fill="none"
+            strokeLinecap="round"
+            opacity="0.4"
+            style={{
+              strokeDasharray: circumference,
+              strokeDashoffset: isVisible ? strokeDashoffset : circumference,
+            }}
+            initial={{ strokeDashoffset: circumference }}
+            animate={{
+              strokeDashoffset: isVisible ? strokeDashoffset : circumference,
+            }}
+            transition={{
+              duration: 2.5,
+              ease: "easeInOut",
+              delay: 0.5,
+            }}
           />
         </svg>
 
-        {/* Icône au centre */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Icon
-            className={`text-2xl text-${color} group-hover:scale-110 transition-transform`}
-          />
-        </div>
-
-        {/* Pourcentage */}
+        {/* Icône au centre avec animation */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isVisible ? 1 : 0 }}
-          transition={{ delay: 1.5 }}
+          initial={{ scale: 0, rotate: -180 }}
+          animate={isInView ? { scale: 1, rotate: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
         >
-          <span className="text-lg font-bold text-white bg-gray-900/80 rounded-full w-12 h-12 flex items-center justify-center">
-            {percentage}%
-          </span>
+          <motion.div
+            className={`text-3xl ${getColorClass(
+              color
+            )} group-hover:scale-110 transition-transform`}
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Icon />
+          </motion.div>
         </motion.div>
+
+        {/* Pourcentage avec animation numérique */}
+        <motion.div
+          className="absolute -bottom-2 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 1.5, duration: 0.5 }}
+        >
+          <motion.div
+            className="bg-gradient-to-r from-gray-900/90 to-black/90 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 shadow-lg"
+            whileHover={{ scale: 1.1 }}
+          >
+            <motion.span
+              className="text-sm font-bold text-white"
+              initial={{ scale: 1.2 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <AnimatedCounter value={percentage} delay={800} />%
+            </motion.span>
+          </motion.div>
+        </motion.div>
+
+        {/* Particules flottantes */}
+        {isVisible && (
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className={`particle particle-${i + 1} ${getColorClass(
+                  color
+                ).replace("text-", "bg-")} float-particles`}
+                style={{
+                  left: `${20 + i * 12}%`,
+                  top: `${20 + i * 12}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.6, 1, 0.6],
+                  scale: [1, 1.5, 1],
+                }}
+                transition={{
+                  duration: 2 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      <p className="text-center text-gray-300 font-medium">{label}</p>
+      <motion.p
+        className="text-center text-gray-300 font-medium text-sm"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ delay: 2, duration: 0.5 }}
+      >
+        {label}
+      </motion.p>
     </motion.div>
   );
 };
@@ -182,6 +387,48 @@ const CertificationBadge = ({ cert, index }) => {
   );
 };
 
+// Composant pour animation numérique fluide
+const AnimatedCounter = ({ value, duration = 2000, delay = 0 }) => {
+  const [count, setCount] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const increment = value / (duration / 16); // 60fps
+    const timer = setInterval(() => {
+      setCount((prevCount) => {
+        const newCount = prevCount + increment;
+        if (newCount >= value) {
+          clearInterval(timer);
+          return value;
+        }
+        return newCount;
+      });
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [isActive, value, duration]);
+
+  const ref = useRef();
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        setIsActive(true);
+      }, delay);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay]);
+
+  return (
+    <span ref={ref} className="font-mono">
+      {Math.floor(count)}
+    </span>
+  );
+};
+
 const AboutMe = () => {
   const containerRef = useRef();
   const { t } = useTranslation();
@@ -202,20 +449,20 @@ const AboutMe = () => {
     {
       icon: FaGraduationCap,
       label: t("about.stats.experience"),
-      value: "25",
-      color: "violet-500",
+      value: "40",
+      color: "success",
     },
     {
       icon: FaHeart,
       label: t("about.stats.clients"),
-      value: "40",
-      color: "red-500",
+      value: "45",
+      color: "error",
     },
     {
       icon: FaAward,
       label: t("about.stats.certifications"),
-      value: "30",
-      color: "yellow-500",
+      value: "35",
+      color: "warning",
     },
   ];
 
@@ -387,19 +634,31 @@ const AboutMe = () => {
         {/* Statistiques circulaires */}
         <ProgressiveReveal delay={0.6}>
           <div className="mb-20">
-            {" "}
-            <h3 className="text-2xl font-bold text-white text-center mb-12">
-              {t("about.statsTitle")}
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <motion.h3
+              className="text-3xl font-bold text-white text-center mb-16 shimmer-effect"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className="gradient-text">{t("about.statsTitle")}</span>
+            </motion.h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 max-w-6xl mx-auto">
               {stats.map((stat, index) => (
-                <CircularProgress
+                <motion.div
                   key={index}
-                  percentage={parseInt(stat.value)}
-                  label={stat.label}
-                  icon={stat.icon}
-                  color={stat.color}
-                />
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <CircularProgress
+                    percentage={parseInt(stat.value)}
+                    label={stat.label}
+                    icon={stat.icon}
+                    color={stat.color}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>

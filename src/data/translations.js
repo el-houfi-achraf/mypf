@@ -117,9 +117,15 @@ export const translations = {
         facesmart:
           "Une application de gestion des employés alimentée par l'IA utilisant la reconnaissance faciale pour le suivi des présences et la gestion de la productivité.",
         stevia:
-          "STEVIA est une application web de santé intégrée conçue pour répondre aux besoins des utilisateurs en matière de gestion de leur bien-être. Elle offre une plateforme intuitive permettant le suivi des paramètres vitaux, la gestion des médicaments et des rendez-vous médicaux, la réception de conseils personnalisés, ainsi que l'accès à des services de téléconsultation.",
+          "Une application web de santé intégrée conçue pour répondre aux besoins des utilisateurs en matière de gestion de leur bien-être.",
         pharmacy:
-          "une application pour la gestion de pharmacies, avec un backend en Spring Boot, un frontend en Angular et développée avec Expo.",
+          "Une application pour la gestion de pharmacies, avec un backend en Spring Boot, un frontend en Angular et développée avec Expo.",
+        umlforge:
+          "Un outil de modélisation UML moderne développé en Reactjs. Permet la création, l'édition et la génération de diagrammes UML.",
+        tonefixer:
+          "Une application de traitement audio développée en React 18, TypeScript, et TailwindCSS. Offre des fonctionnalités avancées de modification audio, de nettoyage sonore.",
+        vgitiam:
+          "Une solution complète de gestion des identités et des accès (IAM) développée avec Django et TailwindCSS.",
       },
     }, // Contact Section
     contact: {
@@ -298,9 +304,15 @@ export const translations = {
         facesmart:
           "An AI-powered employee management application using facial recognition for attendance tracking and productivity management.",
         stevia:
-          "STEVIA is an integrated health web application designed to meet users' wellness management needs. It offers an intuitive platform for tracking vital signs, managing medications and medical appointments, receiving personalized advice, and accessing telemedicine services.",
+          "STEVIA is an integrated health web application designed to meet users' wellness management needs.",
         pharmacy:
-          "an application for pharmacy management, with a Spring Boot backend, an Angular frontend and developed with Expo.",
+          "An application for pharmacy management, with a Spring Boot backend, an Angular frontend and developed with Expo.",
+        umlforge:
+          "A modern UML modeling tool developed in Java with Reactjs. Enables creation, editing and generation of UML.",
+        tonefixer:
+          "An audio processing application developed in React 18, TypeScript, and TailwindCSS. Offers advanced audio editing features, sound cleaning.",
+        vgitiam:
+          "A complete Identity and Access Management (IAM) solution developed with Django and TailwindCSS. Integrates Keycloak for authentication and authorization.",
       },
     }, // Contact Section
     contact: {
@@ -474,6 +486,12 @@ export const translations = {
           "STEVIA هو تطبيق ويب صحي متكامل مصمم لتلبية احتياجات المستخدمين في إدارة رفاهيتهم. يوفر منصة بديهية لتتبع العلامات الحيوية وإدارة الأدوية والمواعيد الطبية.",
         pharmacy:
           "تطبيق لإدارة الصيدليات، مع backend بـ Spring Boot وfrontend بـ Angular ومطور بـ Expo.",
+        umlforge:
+          "أداة نمذجة UML حديثة مطورة بـ Reactjs . تتيح إنشاء وتحرير وتوليد مخططات UML بواجهة مستخدم بديهية وميزات تصدير متقدمة.",
+        tonefixer:
+          "تطبيق معالجة صوتية مطور بـ React 18، TypeScript، وTailwindCSS. يوفر ميزات تحرير صوتي متقدمة وتنظيف الصوت وتحسين جودة الصوت مع دعم FFmpeg.",
+        vgitiam:
+          "حل شامل لإدارة الهوية والوصول (IAM) مطور بـ Django . يدمج Keycloak للمصادقة والتخويل مع قاعدة بيانات PostgreSQL لإدارة آمنة للمستخدمين.",
       },
     }, // Contact Section
     contact: {
