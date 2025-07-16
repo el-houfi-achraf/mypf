@@ -2,19 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const BurgerIcon = ({ isOpen, onClick, className = "" }) => {
-  const lineVariants = {
-    closed: {
-      rotate: 0,
-      y: 0,
-      opacity: 1,
-    },
-    open: {
-      rotate: 0,
-      y: 0,
-      opacity: 1,
-    },
-  };
-
   const topLineVariants = {
     closed: {
       rotate: 0,

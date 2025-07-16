@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 import LazyImage from "./LazyImage";
 import { useTranslation } from "../hooks/useTranslation";
-import "./CircularProgress.css";
 
 const ProgressiveReveal = ({ children, delay = 0 }) => {
   const ref = useRef();

@@ -1,28 +1,9 @@
 import { motion } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { Stars, OrbitControls } from "@react-three/drei";
 import {
-  FaGithub,
-  FaLinkedin,
-  FaInstagram,
   FaHeart,
   FaArrowUp,
 } from "react-icons/fa";
 import AnimatedBackground from "./AnimatedBackground";
-
-const SocialLink = ({ href, icon: Icon, label }) => (
-  <motion.a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.9 }}
-  >
-    <Icon className="text-xl text-gray-400 hover:text-primary transition-colors" />
-    <span className="sr-only">{label}</span>
-  </motion.a>
-);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

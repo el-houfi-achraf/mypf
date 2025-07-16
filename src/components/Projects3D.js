@@ -7,7 +7,6 @@ import { useTranslation } from "../hooks/useTranslation";
 import facesmartImage from "../assets/images/facesmart.png";
 import se7atiImage from "../assets/images/se7ati.png";
 import mbImage from "../assets/images/mb.png";
-import ezImage from "../assets/images/ez.png";
 import UMLImage from "../assets/images/uml.png";
 import vgImage from "../assets/images/VG.png";
 import toneImage from "../assets/images/Tone.png";
