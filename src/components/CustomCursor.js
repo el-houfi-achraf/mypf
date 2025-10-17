@@ -47,6 +47,11 @@ const CustomCursor = () => {
     const handleMouseEnter = (e) => {
       const target = e.target;
 
+      // Vérifier que target est un élément HTML avant d'utiliser matches
+      if (!target || typeof target.matches !== "function") {
+        return;
+      }
+
       // Détection des éléments interactifs
       if (
         target.matches('a, button, [role="button"], input, textarea, select')
